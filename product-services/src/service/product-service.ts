@@ -7,4 +7,8 @@ export class ProductService {
     return Promise.resolve(mockData);
   }
 
+  async getProductById(id: string): Promise<Product> {
+    const products = await this.getProductsList();
+    return products.find((product) => product.id === id);
+  }
 }
