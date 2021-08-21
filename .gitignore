@@ -12,6 +12,7 @@
 
 # Serverless directories
 .serverless
+.webpack
 
 # profiling files
 chrome-profiler-events*.json

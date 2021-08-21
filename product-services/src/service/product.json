@@ -1,0 +1,58 @@
+[
+    {
+      "count": 14,
+      "description": "(analog) (A) vendor code (50-3401060)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
+      "price": 12.4,
+      "title": "Steering cardan",
+      "img": "steering-cardan.jpg"
+    },
+    {
+      "count": 30,
+      "description": "(A) vendor code (85-3401150)",
+      "id": "7567ec4b-b10c-45c5-9345-fc73c48a80a1",
+      "price": 14.51,
+      "title": "Cardan",
+      "img": "cardan.jpg"
+    },
+    {
+      "count": 6,
+      "description": "vendor code (50-3405015)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
+      "price": 10,
+      "title": "Hydraulic cylinder",
+      "img": "hydraulic-cylinder.jpg"
+    },
+    {
+      "count": 17,
+      "description": "vendor code (70-3400020)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
+      "price": 40,
+      "title": "Power steering",
+      "img": "power-steering.jpg"
+    },
+    {
+      "count": 12,
+      "description": "vendor code (50-3406015A)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
+      "price": 139.91,
+      "title": "Hydrodistributor GUR",
+      "img": "hydrodistributor.jpg"
+    },
+    {
+      "count": 13,
+      "description": "With filter, with bracket for metering pump. vendor code (70-3400020-03 HEADS)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a3",
+      "price": 256.31,
+      "title": "Hydraulic tank GUR MTZ",
+      "img": "hydraulic-tank.jpg"
+    },
+    {
+      "count": 20,
+      "description": "vendor code (102-3405103 ZI)",
+      "id": "7567ec4b-b10c-48c5-9345-fc73348a80a1",
+      "price": 30.05,
+      "title": "Finger",
+      "img": "finger.jpg"
+    }
+  ]
