@@ -13,7 +13,7 @@ export class GetProductByIdController {
 
   handler: ValidatedEventAPIGatewayProxyEvent = async (event) => {
     try {
-        const productId = event.pathParameters.productId;
+      const productId = event.pathParameters.productId;
       const product = await this.service.getProductById(productId);
       if (product) {
         return formatJSONResponse(200, product);
