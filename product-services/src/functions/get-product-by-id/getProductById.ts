@@ -1,17 +1,18 @@
 import "source-map-support/register";
 import {
-  ValidatedEventAPIGatewayProxyEvent,
+  InputAPIGatewayProxyEvent,
   formatJSONResponse,
 } from "../../libs/apiGateway";
 import { middyfy } from "../../libs/lambda";
 import createHttpError from "http-errors";
 
-import { ProductService } from "../../service/product-service";
+import { ProductServiceInstance } from "../../service/product-service";
+import { ProductServiceInterface } from "../../service/product-service-interface";
 
 export class GetProductByIdController {
-  constructor(private service: ProductService) {}
+  constructor(private service: ProductServiceInterface) {}
 
-  handler: ValidatedEventAPIGatewayProxyEvent = async (event) => {
+  handler: InputAPIGatewayProxyEvent = async (event) => {
     try {
       const productId = event.pathParameters.productId;
       const product = await this.service.getProductById(productId);
@@ -31,5 +32,5 @@ export class GetProductByIdController {
 }
 
 export const getProductById = middyfy(
-  new GetProductByIdController(new ProductService()).handler
+  new GetProductByIdController(ProductServiceInstance).handler
 );
