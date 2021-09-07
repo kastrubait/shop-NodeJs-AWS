@@ -7,6 +7,11 @@ const SQL_GET_PRODUCTS_LIST =
 
 const SQL_GET_PRODUCT_BY_ID = SQL_GET_PRODUCTS_LIST + " WHERE p.id = $1";
 
+const CREATE_PRODUCT =
+  "INSERT INTO products (title, description, image, price) VALUES ($1, $2, $3, $4) RETURNING id";
+
+const CREATE_COUNT = "INSERT INTO stocks (product_id, count) VALUES ($1, $2)";
+
 const connectionPool = new Pool({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
@@ -34,7 +39,6 @@ class ProductService implements ProductServiceInterface {
   }
 
   async getProductById(id: string) {
-
     const result = await this.runQuery<Product>({
       text: SQL_GET_PRODUCT_BY_ID,
       values: [id],
@@ -42,14 +46,39 @@ class ProductService implements ProductServiceInterface {
     return result.rows[0];
   }
 
+  async createProduct(product: Omit<Product, "id">) {
+    const result = await this.runTransactionQuery(product);
+    return result.rows[0];
+  }
+
   private async runQuery<R>(query: QueryConfig) {
     const client = await this.clientPool.connect();
     try {
       const result = await client.query<R>(query);
-      console.log('runQuery', result);
       return result;
     } catch (error) {
       console.log("Error:", error);
+    } finally {
+      client.release();
+    }
+  };
+
+  private async runTransactionQuery(product: Omit<Product, "id">) {
+    const client = await this.clientPool.connect();
+    try {
+      await client.query("BEGIN");
+      const result = await client.query(CREATE_PRODUCT, [
+        product.title,
+        product.description,
+        product.price,
+        product.image,
+      ]);
+      client.query(CREATE_COUNT, [result.rows[0].id, product.count]);
+      await client.query("COMMIT");
+      return result;
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
     } finally {
       client.release();
     }
