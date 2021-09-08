@@ -39,6 +39,6 @@ export class CreateProductController {
   };
 }
 
-export const createProduct = middyfy(
+export const handler = middyfy(
   new CreateProductController(ProductServiceInstance).handler
 );
