@@ -12,7 +12,9 @@ import { ProductServiceInterface } from "../../service/product-service-interface
 export class GetProductsListController {
   constructor(private service: ProductServiceInterface) {}
 
-  handler: InputAPIGatewayProxyEvent = async () => {
+  handler: InputAPIGatewayProxyEvent = async (event, context) => {
+    console.log("Incoming request", event);
+    context.callbackWaitsForEmptyEventLoop = false;
     try {
       const products = await this.service.getProductsList();
       return formatJSONResponse(200, products);
