@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: REST API for shop application
+  description: a backend part of NodeJs-AWS task3
+  contact:
+    email: tatsiana.kastrubai@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://qxm1bk977h.execute-api.eu-west-1.amazonaws.com/dev
+paths:
+  /products:
+    get:
+      tags:
+      - products
+      summary: Get all products
+      description: |
+        Get all products
+      operationId: getProductsList
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "400":
+          description: Product with ID not found
+  /products/{productId}:
+    get:
+      tags:
+      - products
+      summary: Get a product by ID
+      description: |
+        Get a product by ID
+      operationId: getProductById
+      parameters:
+      - name: productId
+        in: path
+        description: productId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Product with ID not found
+components:
+  schemas:
+    Product:
+      required:
+      - count
+      - description
+      - id
+      - img
+      - price
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 7567ec4b-b10c-48c5-9345-fc73c48a80a3
+        title:
+          type: string
+          example: Hydraulic tank
+        description:
+          type: string
+          example: With filter, with bracket for metering pump. vendor code (70-3400020-03)
+        count:
+          type: integer
+          example: 10
+        price:
+          type: number
+          example: 256.31
+        img:
+          type: string
+          example: product.jpeg
