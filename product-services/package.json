@@ -26,7 +26,7 @@
     "@types/pg": "^8.6.1",
     "jest": "^27.1.0",
     "json-schema-to-ts": "^1.5.0",
-    "serverless": "^2.23.0",
+    "serverless": "^2.57.0",
     "serverless-offline": "^8.0.0",
     "serverless-openapi-documentation": "^0.4.0",
     "serverless-webpack": "^5.3.5",

@@ -8,7 +8,7 @@ const SQL_GET_PRODUCTS_LIST =
 const SQL_GET_PRODUCT_BY_ID = SQL_GET_PRODUCTS_LIST + " WHERE p.id = $1";
 
 const CREATE_PRODUCT =
-  "INSERT INTO products (title, description, image, price) VALUES ($1, $2, $3, $4) RETURNING id";
+  "INSERT INTO products (title, description, price, image) VALUES ($1, $2, $3, $4) RETURNING id";
 
 const CREATE_COUNT = "INSERT INTO stocks (product_id, count) VALUES ($1, $2)";
 
@@ -64,6 +64,7 @@ class ProductService implements ProductServiceInterface {
   };
 
   private async runTransactionQuery(product: Omit<Product, "id">) {
+    console.log('product:', typeof product);
     const client = await this.clientPool.connect();
     try {
       await client.query("BEGIN");
@@ -77,6 +78,7 @@ class ProductService implements ProductServiceInterface {
       await client.query("COMMIT");
       return result;
     } catch (error) {
+      console.log(error);
       await client.query("ROLLBACK");
       throw error;
     } finally {
