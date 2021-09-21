@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import importProductsFile from '@functions/import-product';
+import importFileParser from '@functions/import-file-parser';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -12,7 +13,8 @@ const serverlessConfiguration: AWS = {
       includeModules: true
     },
     bucketName: "tamiko-shop-csv-upload",
-    uploadFolderName: "uploaded"
+    uploadFolderName: "uploaded",
+    parsedFolderName: "parsed"
   },
   plugins: [
     "serverless-webpack",
@@ -44,7 +46,7 @@ const serverlessConfiguration: AWS = {
     ],
     lambdaHashingVersion: '20201221',
   },
-  functions: { importProductsFile },
+  functions: { importProductsFile, importFileParser },
 };
 
 module.exports = serverlessConfiguration;
