@@ -13,6 +13,11 @@ const handler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 ) => {
   try {
     const fileName = event.queryStringParameters.name;
+    if (!fileName) {
+      return formatJSONResponse(400, {
+        message: 'Missing required request parameters: [name]',
+      });
+    }
     const getObjectParams = {
       Bucket: "tamiko-shop-csv-upload",
       Key: `uploaded/${fileName}`,
