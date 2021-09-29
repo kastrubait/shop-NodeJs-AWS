@@ -31,7 +31,8 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      S3_BUCKET_NAME: "${self:custom.bucketName}"
+      S3_BUCKET_NAME: "${self:custom.bucketName}",
+      SQS_URL: { Ref: 'SQSQueue' }
     },
     iamRoleStatements: [
       {
@@ -43,8 +44,36 @@ const serverlessConfiguration: AWS = {
           "arn:aws:s3:::${self:custom.bucketName}/*/*"
         ]
       },
+      {
+        'Effect': 'Allow',
+        'Action': 'sqs:*',
+        'Resource': {
+          'Fn::GetAtt': ['SQSQueue', 'Arn'],
+        }      
+      }
     ],
     lambdaHashingVersion: '20201221',
+  },
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'catalog-queue',
+          ReceiveMessageWaitTimeSeconds: 20,
+        },
+      },
+    },
+    Outputs: {
+      SqsQueueArn: {
+        Value: {
+          'Fn::GetAtt': ['SQSQueue', 'Arn'],
+        },
+        Export: {
+          Name: 'catalogQueue',
+        },
+      },
+    },
   },
   functions: { importProductsFile, importFileParser },
 };
