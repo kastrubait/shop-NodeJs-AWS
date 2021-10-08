@@ -5,7 +5,7 @@ import { SQSEvent, SQSRecord } from "aws-lambda";
 import { Product } from "../../model/product-model";
 import { ProductNewService } from "../../service/product-new-service";
 
-export const catalogBatchProcess = async (event: SQSEvent) => {
+const catalogBatchProcess = async (event: SQSEvent) => {
   try {
     console.log("catalogBatchProcess lambda is executing", event.Records);
     const createdProducts = event.Records.map(async (record: SQSRecord) => {

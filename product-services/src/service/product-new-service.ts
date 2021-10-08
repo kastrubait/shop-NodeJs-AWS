@@ -62,7 +62,7 @@ export class ProductNewService implements ProductServiceInterface {
       const { 
         rows: [createdProduct] 
       } = result;
-      const countResult = this.client.query(this.CREATE_COUNT, [createdProduct.id, product.count]);
+      const countResult = await this.client.query(this.CREATE_COUNT, [createdProduct.id, product.count]);
       await this.client.query("COMMIT");
       const {
         rows: [count],
