@@ -18,11 +18,12 @@ const serverlessConfiguration: AWS = {
     },
     // dbConfig,
     documentation,
+    productsSqsName: "catalog-queue",
+    emailToNotify: "${self:custom.dbConfig.NOTIFY_EMAIL, env:NOTIFY_EMAIL, ''}",
   },
   plugins: [
     'serverless-webpack',
     "serverless-offline",
-    "serverless-openapi-documentation",
   ],
   provider: {
     name: 'aws',
@@ -40,8 +41,42 @@ const serverlessConfiguration: AWS = {
       DB_DATABASE: "${self:custom.dbConfig.DB_DATABASE, env:DB_DATABASE, ''}",
       DB_USER: "${self:custom.dbConfig.DB_USER, env:DB_USER, ''}",
       DB_PASSWORD: "${self:custom.dbConfig.DB_PASSWORD, env:DB_PASSWORD, ''}",
+      SNS_ARN: {
+        Ref: "SNSTopic",
+      },
+    },
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: "Allow",
+            Action: "sqs:*",
+            Resource: "arn:aws:sns:eu-west-1:274349858350:products-created",
+          },
+        ],
+      },
     },
     lambdaHashingVersion: '20201221',
+  },
+  resources: {
+    Resources: {
+      SNSTopic: {
+        Type: "AWS::SNS::Topic",
+        Properties: {
+          TopicName: "products-created",
+        },
+      },
+      SNSSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "${self:custom.emailToNotify}",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+        },
+      },
+    },
   },
   functions: { getProductsList, getProductsById, createProduct, catalogBatchProcess, },
 };

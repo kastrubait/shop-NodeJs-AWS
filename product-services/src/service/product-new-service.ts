@@ -48,7 +48,7 @@ export class ProductNewService implements ProductServiceInterface {
     }
   }
 
-  async createProduct(product: Product): Promise<Product> {
+  async createProduct(product: Omit<Product, "id">): Promise<Product> {
     this.client = new Client(dbOptions);
     await this.client.connect();
     try {

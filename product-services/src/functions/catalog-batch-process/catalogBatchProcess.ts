@@ -4,6 +4,7 @@ import { middyfy } from "@libs/lambda";
 import { SQSEvent, SQSRecord } from "aws-lambda";
 import { Product } from "../../model/product-model";
 import { ProductNewService } from "../../service/product-new-service";
+import { NotificationService } from "../../service/notification.service";
 
 const catalogBatchProcess = async (event: SQSEvent) => {
   try {
@@ -11,7 +12,9 @@ const catalogBatchProcess = async (event: SQSEvent) => {
     const createdProducts = event.Records.map(async (record: SQSRecord) => {
       const product: Product = JSON.parse(record.body);
       const newService = new ProductNewService();
-      const savedProduct = await newService.createProduct (product);
+      const notificationService = new NotificationService();
+      const savedProduct = await newService.createProduct(product);
+      await notificationService.notify(savedProduct);
       return savedProduct;
     });
     return createdProducts;
