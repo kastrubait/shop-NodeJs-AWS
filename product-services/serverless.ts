@@ -20,6 +20,8 @@ const serverlessConfiguration: AWS = {
     documentation,
     productsSqsName: "catalog-queue",
     emailToNotify: "${self:custom.dbConfig.NOTIFY_EMAIL, env:NOTIFY_EMAIL, ''}",
+    emailWithFilter:
+      "${self:custom.dbConfig.NOTIFY_WITH_FILTER_EMAIL, env:NOTIFY_WITH_FILTER_EMAIL, ''}",
   },
   plugins: [
     'serverless-webpack',
@@ -73,6 +75,19 @@ const serverlessConfiguration: AWS = {
           Protocol: "email",
           TopicArn: {
             Ref: "SNSTopic",
+          },
+        },
+      },
+      SNSTitleFilterSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "${self:custom.emailWithFilter}",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+          FilterPolicy: {
+            hasTitle: ["true"],
           },
         },
       },
