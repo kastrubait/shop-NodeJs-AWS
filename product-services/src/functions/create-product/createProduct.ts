@@ -7,7 +7,7 @@ import {
 import { middyfy } from "../../libs/lambda";
 import createHttpError from "http-errors";
 
-import { ProductServiceInstance } from "../../service/product-service";
+import { ProductNewService } from "../../service/product-new-service";
 import { ProductServiceInterface } from "../../service/product-service-interface";
 import schema from "./schema";
 
@@ -40,5 +40,5 @@ export class CreateProductController {
 }
 
 export const handler = middyfy(
-  new CreateProductController(ProductServiceInstance).handler
+  new CreateProductController(new ProductNewService).handler
 );

@@ -9,7 +9,7 @@ import * as importFileService from "../service/import-file-servise";
 
 const handler: Handler<S3Event, any> = async (event) => {
   try {
-    await importFileService.handleImportedFiles(event.Records);
+    return await importFileService.handleImportedFiles(event.Records);
   } catch (error) {
     const response = new createHttpError.InternalServerError(error.message);
     return formatJSONResponse(response.statusCode, response.message);
