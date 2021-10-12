@@ -63,6 +63,34 @@ const serverlessConfiguration: AWS = {
           ReceiveMessageWaitTimeSeconds: 20,
         },
       },
+      GatewayResponseAccessDenied: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+          ResponseParameters: {
+            'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Methods': "'GET,OPTIONS'"
+          },
+          ResponseType: 'ACCESS_DENIED',
+          RestApiId: {
+            Ref: 'ApiGatewayRestApi',
+          },
+        },
+      },
+      GatewayResponseUnauthorized: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+          ResponseParameters: {
+            'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Methods': "'GET,OPTIONS'"
+          },
+          ResponseType: 'DEFAULT_4XX',
+          RestApiId: {
+            Ref: 'ApiGatewayRestApi',
+          },
+        },
+      },
     },
     Outputs: {
       SqsQueueArn: {
