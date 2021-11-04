@@ -8,6 +8,9 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "eb:init": "eb init -p node.js -r eu-west-1 kastrubait-bff-api",
+    "eb:create": "eb create production -s -c kastrubait-bff-api-dev",
+    "eb:deploy": "eb deploy production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -16,9 +19,13 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
+    "@nestjs/axios": "0.0.2",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.0.2",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.0.0",
+    "axios": "^0.22.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
