@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { All, Controller, Param, Req, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Request } from 'express';
+import { RecipientInterceptor } from './recipient.interceptor';
 
 @Controller()
+@UseInterceptors(RecipientInterceptor)
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @All(':recipientServiceName')
+  getRecipientData(@Param('recipientServiceName') recipientServiceName: string, @Req() request: Request) {
+    return this.appService.getResponse(recipientServiceName, request);
   }
 }
