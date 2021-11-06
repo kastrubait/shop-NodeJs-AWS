@@ -19,6 +19,7 @@ export type TResponse = {
     'Access-Control-Allow-Origin': string;
     'Access-Control-Allow-Headers': string;
     'Access-Control-Allow-Methods': string;
+    'Access-Control-Allow-Credentials': boolean,
   };
   body: string;
 };
@@ -31,6 +32,7 @@ export const formatJSONResponse = (statusCode: number, response: Record<string, 
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS, PUT",
+      "Access-Control-Allow-Credentials": true,
     }
   }
 }
