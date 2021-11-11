@@ -16,11 +16,11 @@ export class AppService {
     request: Request
   ): Observable<AxiosResponse<any>> {
     const recipientUrl: string = this.configService.get(recipientServiceName);
-    console.log('start ->', request.method, recipientServiceName);
-    console.log(recipientUrl);
+    // console.log(recipientUrl);
     if (recipientUrl) {
       delete request.headers.host;
       delete request.headers.connection;
+      delete request.headers['if-none-match'];
 
       const axiosConfig: any = {
         url: recipientUrl + request.originalUrl,
