@@ -1,0 +1,21 @@
+{
+    "name": "bff-express-service",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js",
+      "eb:init": "eb init -p node.js -r eu-west-1 kastrubait-bff-express-api", 
+      "eb:create": "eb create development -s -c kastrubait-bff-express-api-dev",
+      "eb:terminate": "eb terminate development"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "axios": "^0.23.0",
+      "dotenv": "^10.0.0",
+      "express": "^4.17.1",
+      "node-cache": "^5.1.2"
+    }
+  }
+  
